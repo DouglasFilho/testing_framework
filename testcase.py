@@ -9,13 +9,13 @@ class TestCase:
         pass
 
     def run(self, result):
-        result.start_test()
+        result.test_started()
         self.set_up()
         try:
             method = getattr(self, self.method_name)
             method()
-            result.add_success()
-        except Exception as e:
-            result.add_failure()
-            print(f"Erro no teste '{self.method_name}': {e}")
+        except AssertionError:
+            result.add_failure(self.method_name)
+        except Exception:
+            result.add_error(self.method_name)
         self.tear_down()
