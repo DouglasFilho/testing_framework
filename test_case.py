@@ -19,3 +19,15 @@ class TestCase:
         except Exception:
             result.add_error(self.method_name)
         self.tear_down()
+
+    def assert_equals(self, expected, actual):
+        if expected != actual:
+            raise AssertionError(f"Esperado: {expected}, mas recebeu: {actual}")
+
+    def assert_true(self, condition):
+        if not condition:
+            raise AssertionError(f"Esperava condição verdadeira, mas recebeu False.")
+
+    def assert_false(self, condition):
+        if condition:
+            raise AssertionError(f"Esperava condição falsa, mas recebeu True.")
