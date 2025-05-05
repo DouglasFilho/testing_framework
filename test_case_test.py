@@ -1,29 +1,28 @@
 from testcase import TestCase
 from test_result import TestResult
-
-class WasRun(TestCase):
-    def set_up(self):
-        self.log = "set_up "
-
-    def test_method(self):
-        self.log += "test_method "
-
-    def tear_down(self):
-        self.log += "tear_down"
+from test_stub import TestStub
 
 class TestCaseTest(TestCase):
-    def test_template_method(self):
-        test = WasRun("test_method")
-        result = TestResult()
-        test.run(result)
-        expected = "set_up test_method tear_down"
-        if test.log != expected:
-            raise Exception(f"Esperado: '{expected}', mas obteve: '{test.log}'")
-        print("Teste passou!")
+    def set_up(self):
+        self.result = TestResult()
 
-if __name__ == "__main__":
-    print("Rodando TestCaseTest...")
-    test = TestCaseTest("test_template_method")
-    result = TestResult()
-    test.run(result)
-    print(result.summary())  # Adiciona saída do resumo real
+    def test_result_success_run(self):
+        test = TestStub("test_success")
+        test.run(self.result)
+        assert self.result.summary() == "1 run, 0 failed, 0 error"
+
+    def test_result_failure_run(self):
+        test = TestStub("test_failure")
+        test.run(self.result)
+        assert self.result.summary() == "1 run, 1 failed, 0 error"
+
+    def test_result_error_run(self):
+        test = TestStub("test_error")
+        test.run(self.result)
+        assert self.result.summary() == "1 run, 0 failed, 1 error"
+
+    def test_result_multiple_run(self):
+        TestStub("test_success").run(self.result)
+        TestStub("test_failure").run(self.result)
+        TestStub("test_error").run(self.result)
+        assert self.result.summary() == "3 run, 1 failed, 1 error"
