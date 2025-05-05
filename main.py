@@ -1,8 +1,8 @@
-from test_result import TestResult
 from test_case_test import TestCaseTest
-from test_stub import TestStub
+from test_spy_test import TestSpyTest
+from test_result import TestResult
 
-print("🚀 Executando todos os testes do framework...\n")
+print("🚀 Executando todos os testes...\n")
 
 result = TestResult()
 
@@ -13,9 +13,18 @@ test_case_tests = [
     "test_result_multiple_run"
 ]
 
-for test_name in test_case_tests:
-    test = TestCaseTest(test_name)
-    test.run(result)
+test_spy_tests = [
+    "test_was_set_up",
+    "test_was_run",
+    "test_was_tear_down",
+    "test_template_method"
+]
 
-print("\n✅ Resumo dos testes:")
+for test_name in test_case_tests:
+    TestCaseTest(test_name).run(result)
+
+for test_name in test_spy_tests:
+    TestSpyTest(test_name).run(result)
+
+print("\n✅ Resumo final:")
 print(result.summary())
