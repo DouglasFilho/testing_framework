@@ -1,6 +1,6 @@
 from test_result import TestResult
 from test_spy import TestSpy
-from testcase import TestCase
+from test_case import TestCase
 
 class TestSpyTest(TestCase):
     def set_up(self):

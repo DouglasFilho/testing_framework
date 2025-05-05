@@ -1,4 +1,4 @@
-from testcase import TestCase
+from test_case import TestCase
 
 class TestStub(TestCase):
     def test_success(self):
